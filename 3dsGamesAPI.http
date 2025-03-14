@@ -1,0 +1,6 @@
+@_3dsGamesAPI_HostAddress = http://localhost:5155
+
+GET {{_3dsGamesAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
