@@ -1,0 +1,21 @@
+# Ignore build artifacts
+bin/
+obj/
+
+# Ignore SQLite database
+*.db
+
+# Ignore user-specific and temporary files
+.vscode/
+.vs/
+*.user
+*.suo
+
+# Ignore auto-generated files
+*.nuget.g.*
+project.assets.json
+project.nuget.cache
+
+# Ignore IDE and solution backup files
+*.log
+*.tmp
