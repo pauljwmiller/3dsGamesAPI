@@ -3,4 +3,7 @@
 GET {{_3dsGamesAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
+GET {{_3dsGamesAPI_HostAddress}}/api/games
+Accept: application/json
+
 ###
