@@ -26,7 +26,7 @@ namespace _3dsGamesAPI.Controllers
             return Ok(games);
         }
         //GET: api/games/{id} (Retrieve a single game by ID)
-        [HttpGet("{id}")]  
+        [HttpGet("{id}")]
         public IActionResult GetGameById(int id)
         {
             var game = _context.Games.Find(id);
@@ -43,7 +43,7 @@ namespace _3dsGamesAPI.Controllers
         public IActionResult AddGame([FromBody] Game game)
         {
             if (game == null)
-            { 
+            {
                 return BadRequest(); // Return 400 if request body is invalid
             }
 
@@ -93,6 +93,17 @@ namespace _3dsGamesAPI.Controllers
             _context.Games.Remove(game); //Remove the game from the database
             _context.SaveChanges(); //Save the changes to database
             return NoContent(); //Return 204 No Content
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Game>>> SearchGames(string query)
+        {
+            var games = await _context.Games
+                .Where(g => EF.Functions.Like(g.Title, $"%{query}%"))
+                //EF.Functions.Like() uses SQL-style matching, is case-insensitive
+                .ToListAsync();
+
+            return Ok(games);
         }
     }
 }

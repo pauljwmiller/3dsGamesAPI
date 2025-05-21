@@ -3,6 +3,7 @@ import axios from "axios";
 
 const GameList = () => {
     const [games, setGames] = useState([]);
+    const [query, setQuery] = useState('');
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -14,11 +15,32 @@ const GameList = () => {
         })
     }, [])
 
+    const handleSearch = () => {
+        axios.get(`/api/games/search?query=${encodeURIComponent(query)}`)
+            .then((response) => setGames(response.data))
+            .catch((error) => {
+                console.error("Game search error: ", error);
+                setError("Search failed");
+            });
+    };
+
     if (error) return <p>{error}</p>
 
     return (
         <div>
             <h2> 3DS Games</h2>
+
+            {/*Search Bar*/}
+            <div>
+                <input
+                    type = "text"
+                    placeholder = "Search by title..."
+                    value = {query}
+                    onChange = {(e) => setQuery(e.target.value)}
+                />
+                <button onClick = {handleSearch}>Search</button>
+            </div>
+
             <ul>
                 {games.map((game) => (
                     <li key = {game.gameId}>
